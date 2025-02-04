@@ -1,0 +1,140 @@
+﻿/* Not totally sure where pb-3 comes from, looking at DOM makes me think that it is a container created by asp.net */
+.pb-3 {
+    display: flex;
+    gap: 10px;
+}
+
+#info {
+    width: 50%;
+    height: 100%;
+    outline: 2px solid black; /* Optional: to give an outline */
+    box-sizing: border-box; /* Ensures padding and border are inside the width */
+    padding: 10px;
+    overflow-wrap: break-word; /* Ensures long words wrap if they don't fit */
+}
+
+#input {
+    width: 100%; /* Ensure it takes full width of the parent */
+    overflow-wrap: break-word; /* Wrap long text/content inside the input div */
+    box-sizing: border-box; /* Include padding and border in width */
+}
+
+#result-table {
+    border: 3px dashed lightslategray;
+    width: 100%; /* Use 100% to make sure the table stays within bounds */
+    min-height: 25%; /* Maintain 50% of the height */
+    max-height: 50%;
+    table-layout: fixed; /* Ensures table columns are more likely to wrap */
+    overflow-y: scroll;
+}
+
+#user-options {
+    position: relative;
+    width: 50%;
+    outline: 2px solid black;
+    box-sizing: border-box;
+    padding: 10px;
+    overflow-wrap: break-word;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap; /* Allow the form fields to wrap if they don't fit in a row */
+}
+
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%; /* Ensure inputs don't overflow their containers */
+    word-wrap: break-word; /* Wrap long text inside inputs */
+}
+
+input[type="reset"] {
+    margin-top: 5px;
+    border: 1px solid gray;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+    input[type="reset"]:hover {
+        background-color: gainsboro;
+    }
+
+.result-button {
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 75px;
+}
+
+    .result-button:hover {
+        background-color: gainsboro;
+    }
+
+    .result-button table {
+        width: 100%;
+        min-height: 70px;
+        height: 100%;
+    }
+
+    .result-button td {
+        padding: 5px;
+        text-align: center;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+    }
+
+.button {
+    margin-top: 5px;
+    border: 1px solid gray;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.info-table {
+    width: 75%;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap; /* Allow the form fields to wrap if they don't fit in a row */
+}
+
+#checkout-form {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%; /* Adjust as needed */
+    background: gainsboro;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Ensure it overlays other elements */
+}

@@ -1,0 +1,97 @@
+﻿@{
+    ViewData["Title"] = "SnipeIt Helper - Search";
+    Layout = ViewBag.Layout;
+}
+
+<!-- Search by user based on their [name, email, id] -->
+<head>
+    <link href="~/css/SnipeIt/search.css" rel="stylesheet"/>
+</head>
+
+<body>
+    <div id="info">
+        <div id="input">
+            <h1>User Search</h1>
+            <search>
+                <form id="user-search-form" asp-action="Search" method="post">
+                    <p>Search for a user by their Full Name (if only one name is given, it is assumed that that is a last name), EKU email address, or EKU ID Number.</p>
+                    <p>Only one search field can be applied at a time. If multiple fields are filled out
+                        then precedence will be given in order of ID > Email > Name.
+                    </p>
+                    <p>Press enter to submit your input.</p>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>First and Last Name</label>
+                            <input type="text" id="name-input" name="name"/>
+                        </div>
+                        <div class="form-group">
+                            <label>EKU Email Address</label>
+                            <input type="text" id="email-input" name="email"/>
+                        </div>
+                        <div class="form-group">
+                            <label>EKU ID Number</label>
+                            <input type="text" id="id-input" name="id"/>
+                        </div>
+                    </div>
+                    <input type="reset" value="Clear"/>
+                    <input type="submit" id="submit-user-search-form" hidden/>
+                </form>
+            </search>
+        </div>
+
+        <h3 style="margin-bottom: 0px;">Search Results</h3>
+        <div id="result-table">
+        </div>
+    </div>
+
+    <div id="user-options">
+        <h1>User Options</h1>
+        <p>
+            After you select a user from the list on the left, their information will
+             appear here as well as actions you can take regarding their account or 
+             current Assets.
+        </p>
+
+        <div id="user-information">
+            <label>Account Information</label>
+            <div class="info-table">
+                <div class="info-group">
+                    <label>First Name</label>
+                    <p>First</p>
+                </div>
+                <div class="info-group">
+                    <label>Last Name</label>
+                    <p>Last</p>
+                </div>
+                <div class="info-group">
+                    <label>Username</label>
+                    <p>first_last01</p>
+                </div>
+                <div class="info-group">
+                    <label>Email Address</label>
+                    <p>first_last01@mymail.eku.edu</p>
+                </div>
+                <div class="info-group">
+                    <label>ID Number</label>
+                    <p>901012345</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="actions-container">
+            <button id="checkout-button" class="button">New Checkout</button>
+        
+            <div id="checkout-form" hidden>
+                <h2>New Asset Checkout</h2>
+                <label>Asset Tag</label>
+                <p>Enter the Asset Tag of the asset to be checked out.</p>
+                <input type="text" required />
+            </div>
+        </div>
+
+        
+    </div>
+
+</body>
+
+<script src="~/js/SnipeIt/search.js"></script>
