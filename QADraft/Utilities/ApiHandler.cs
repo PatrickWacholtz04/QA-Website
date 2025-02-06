@@ -36,7 +36,7 @@ public class ApiHandler
         _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {api_key}");
     }
     
-    public async Task<List<UserInfo>> User_Search(string? name, string? email, string? id)
+    public async Task<List<UserInfo>> User_Search(string? name, string? email, string? id, string? company_id)
     {
         string? endpoint = null;
 
@@ -69,8 +69,11 @@ public class ApiHandler
         }
         else
         {
-            Console.WriteLine("Resolving Endpoint...");
+            Console.WriteLine("Cannot Endpoint.");
         }
+
+        // Add the company ID to the endpoint
+        endpoint += $"&company_id={company_id}";
 
         Console.WriteLine("Endpoint resolved.");
         Console.WriteLine($"Using endpoint `{endpoint}`");
@@ -99,7 +102,7 @@ public class ApiHandler
                     string lastName = user.ContainsKey("last_name") ? user["last_name"].ToString() : "N/A";
                     string user_email = user.ContainsKey("email") ? user["email"].ToString() : "N/A";
                     string employeeNumber = user.ContainsKey("employee_num") ? user["employee_num"].ToString() : "N/A";
-                    string groups = user.ContainsKey("groups") ? user["groups"].ToString() : "N/A";
+                    string? groups = user.ContainsKey("groups") ? user["groups"].ToString() : "N/A";
                     bool no_checkout_list = groups.Contains("no checkout", StringComparison.OrdinalIgnoreCase);
 
                     Console.WriteLine($"User: {firstName} {lastName}, Email: {user_email}, Employee Number: {employeeNumber}, No Checkout List: {no_checkout_list}");

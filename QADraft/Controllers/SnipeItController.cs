@@ -38,7 +38,7 @@ namespace QADraft.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Search(string name, string email, string id)
+        public async Task<IActionResult> Search(string name, string email, string id, string company_id)
         {
             // Verify that the user is logged in, if not direct them to login page
             if (!SessionUtil.IsAuthenticated(HttpContext))
@@ -58,11 +58,11 @@ namespace QADraft.Controllers
 
             Console.WriteLine($"Name: {name}, Email: {email}, ID: {id}");
             ApiHandler api_handler = new ApiHandler();
-            List<UserInfo> test = await api_handler.User_Search(name, email, id);
+            List<UserInfo> test = await api_handler.User_Search(name, email, id, company_id);
 
             foreach (var user in test)
             {
-                Console.WriteLine(user);
+                Console.WriteLine(user.Email);
             }
 
 
