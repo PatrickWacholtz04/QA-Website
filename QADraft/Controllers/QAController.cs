@@ -54,14 +54,15 @@ namespace QADraft.Controllers
             ViewBag.layout = SessionUtil.GetLayout(HttpContext);
 
             // Get every user's id and name and place into a list
-            var users = _context.Users.Select(u => new SelectListItem
+            var users = _context.Users.Where(u => u.isActive == true)
+                .Select(u => new SelectListItem
             {
                 Value = u.Id.ToString(),
                 Text = $"{u.FirstName} {u.LastName}"
             }).ToList();
 
             // Get every coordinator id and name and place into a list
-            var coordinators = _context.Users.Where(u => u.Role == "Coordinator" || u.Role == "Admin" || u.Role == "Super Admin")
+            var coordinators = _context.Users.Where(u => (u.Role == "Coordinator" || u.Role == "Admin" || u.Role == "Super Admin") && u.isActive == true)
                 .Select(u => new SelectListItem
                 {
                     Value = u.Id.ToString(),
