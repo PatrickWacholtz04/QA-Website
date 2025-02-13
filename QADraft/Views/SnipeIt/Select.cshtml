@@ -1,0 +1,50 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+
+<h1>User Options</h1>
+        <p>
+            After you select a user from the list on the left, their information will
+             appear here as well as actions you can take regarding their account or 
+             current Assets.
+        </p>
+
+        <div id="user-information">
+            <label>Account Information</label>
+            <div class="info-table">
+                <div class="info-group">
+                    <label>First Name</label>
+                    <p>First</p>
+                </div>
+                <div class="info-group">
+                    <label>Last Name</label>
+                    <p>Last</p>
+                </div>
+                <div class="info-group">
+                    <label>Username</label>
+                    <p>first_last01</p>
+                </div>
+                <div class="info-group">
+                    <label>Email Address</label>
+                    <p>first_last01@mymail.eku.edu</p>
+                </div>
+                <div class="info-group">
+                    <label>ID Number</label>
+                    <p>901012345</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="actions-container">
+            <button id="checkout-button" class="button">New Checkout</button>
+        
+            <div id="checkout-form" hidden>
+                <h2>New Asset Checkout</h2>
+                <label>Asset Tag</label>
+                <p>Enter the Asset Tag of the asset to be checked out.</p>
+                <input type="text" required />
+            </div>
+        </div>

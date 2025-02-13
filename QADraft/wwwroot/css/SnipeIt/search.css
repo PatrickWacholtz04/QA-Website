@@ -23,7 +23,7 @@
     border: 3px dashed lightslategray;
     width: 100%; /* Use 100% to make sure the table stays within bounds */
     min-height: 25%; /* Maintain 50% of the height */
-    max-height: 50%;
+    max-height: 250px;
     table-layout: fixed; /* Ensures table columns are more likely to wrap */
     overflow-y: scroll;
 }

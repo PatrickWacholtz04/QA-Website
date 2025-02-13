@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 using QADraft.Utilities;
 
 
@@ -33,8 +35,9 @@ namespace QADraft.Controllers
             // Assign the appropriate layout
             ViewBag.layout = SessionUtil.GetLayout(HttpContext);
 
-            // If the user is not logged in (most likely case), return the login page
-            return View();
+            // Default - return empty model
+            List<UserInfo> empty = [];
+            return View(empty);
         }
 
         [HttpPost]
@@ -55,20 +58,34 @@ namespace QADraft.Controllers
             // Assign the appropriate layout
             ViewBag.layout = SessionUtil.GetLayout(HttpContext);
 
-
-            Console.WriteLine($"Name: {name}, Email: {email}, ID: {id}");
-            ApiHandler api_handler = new ApiHandler();
-            List<UserInfo> test = await api_handler.User_Search(name, email, id, company_id);
-
-            foreach (var user in test)
+            // Check that there was an input, if not, return an empty model
+            if (string.IsNullOrEmpty(name) && string.IsNullOrEmpty(email) && string.IsNullOrEmpty(id))
             {
-                Console.WriteLine(user.Email);
+                // Default - return empty model
+                List<UserInfo> empty = [];
+                return View(empty);
             }
 
+            // Pass the form data to the API handler and recieve the response data
+            Console.WriteLine($"Name: {name}, Email: {email}, ID: {id}");
+            ApiHandler api_handler = new ApiHandler();
+            List<UserInfo> result = await api_handler.User_Search(name, email, id, company_id);
 
-            return View();
+            return View(result);
+
         }
 
+        [HttpGet]
+        public IActionResult Select()
+        {
+            return PartialView();
+        }
 
+        [HttpPost]
+        public ActionResult Select(string a)
+        {
+            Console.WriteLine(a);
+            return PartialView("Select");
+        }
     }
 }

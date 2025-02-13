@@ -133,7 +133,7 @@ public class ApiHandler
 
 }
 
-//Outline for class used to return fetch results from User_Search
+
 public class UserInfo
 {
     public string FirstName { get; set; }
