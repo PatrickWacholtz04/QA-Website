@@ -131,6 +131,109 @@ public class ApiHandler
         return [];
     }
 
+
+    public async Task<List<UserInfo>> staffFac_Search(string? name, string? email, string? id, string? company_id)
+    {
+        string? endpoint = null;
+
+        Console.WriteLine("Evaluate Parameters for `User_Search`...");
+        if (id != null)
+        {
+            Console.WriteLine("Resolving Endpoint...");
+            endpoint = $"?employee_num={id}";
+        }
+        else if (email != null)
+        {
+            Console.WriteLine("Resolving Endpoint...");
+            endpoint = $"?email={email}";
+        }
+        else if (name != null)
+        {
+            string[] name_split = name.Split();
+            string? first_name = name_split.Length > 1 ? name_split[0] : null;
+            string? last_name = name_split.Length > 1 ? name_split[1] : name_split[0];
+
+            if (first_name == null)
+            {
+                endpoint = $"?last_name={last_name}";
+            }
+            else
+            {
+                endpoint = $"?first_name={first_name}&last_name={last_name}";
+            }
+            Console.WriteLine("Resolving Endpoint...");
+        }
+        else
+        {
+            Console.WriteLine("Cannot Endpoint.");
+        }
+
+        // Add the company ID to the endpoint
+        endpoint += $"&company_id={company_id}";
+
+        Console.WriteLine("Endpoint resolved.");
+        Console.WriteLine($"Using endpoint `{endpoint}`");
+        string base_url = _user_url;    // Use the url for users because we are doing a user search
+
+        // Send GET request
+        Console.WriteLine("Begin API Request...");
+        HttpResponseMessage response = await _httpClient.GetAsync(base_url + endpoint);
+
+        if (response.IsSuccessStatusCode)
+        {
+            string responseContent = await response.Content.ReadAsStringAsync();
+            string json = @responseContent;
+
+            JObject jsonObject = JsonConvert.DeserializeObject<JObject>(json);
+            JArray rows = jsonObject["rows"] as JArray;
+
+            if (rows != null && rows.Count > 0)
+            {
+                List<Dictionary<string, object>> users = rows.Select(row => row.ToObject<Dictionary<string, object>>()).ToList();
+                List<UserInfo> userInfoList = new List<UserInfo>();
+
+                foreach (var user in users)
+                {
+                    string firstName = user.ContainsKey("first_name") ? user["first_name"].ToString() : "N/A";
+                    string lastName = user.ContainsKey("last_name") ? user["last_name"].ToString() : "N/A";
+                    string user_email = user.ContainsKey("email") ? user["email"].ToString() : "N/A";
+                    string employeeNumber = user.ContainsKey("employee_num") ? user["employee_num"].ToString() : "N/A";
+                    string department = "N/A";
+                    if (user.ContainsKey("department") && user["department"] is JObject deptObject && deptObject.ContainsKey("name"))
+                    {
+                        department = deptObject["name"].ToString();
+                    }
+                    string phone = user.ContainsKey("phone") ? user["phone"].ToString() : "N/A";
+                    string userGroup = user.ContainsKey("user_group") ? user["user_group"].ToString() : "N/A";
+
+                    Console.WriteLine($"User: {firstName} {lastName}, Email: {user_email}, Employee Number: {employeeNumber}, Dept: {department}, Phone: {phone}");
+
+                    userInfoList.Add(new UserInfo
+                    {
+                        FirstName = firstName,
+                        LastName = lastName,
+                        Email = user_email,
+                        EmployeeNumber = employeeNumber,
+                        Department = department,
+                        Phone = phone,
+                        UserGroup = userGroup
+                    });
+                }
+
+                return userInfoList;
+            }
+
+        }
+        else
+        {
+            Console.WriteLine("The API request was denied.");
+            throw new HttpRequestException($"Failed to search: {response.StatusCode}");
+        }
+
+
+        return [];
+    }
+
 }
 
 
@@ -141,4 +244,7 @@ public class UserInfo
     public string Email { get; set; }
     public string EmployeeNumber { get; set; }
     public bool NoCheckoutList { get; set; }
+    public string Department { get; set; }
+    public string Phone { get; set; }
+    public string UserGroup { get; set; }
 }
